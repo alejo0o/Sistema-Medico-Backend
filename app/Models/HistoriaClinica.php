@@ -10,7 +10,6 @@ class HistoriaClinica extends Model
     use HasFactory;
     protected $table = 'historias_clinicas';
     protected $fillable = [
-        'historia_clinica_id',
         'paciente_id',
         'antecedentes_patologicos',
         'antecedentes_quirurgicos',

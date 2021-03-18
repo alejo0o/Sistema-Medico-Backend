@@ -9,7 +9,7 @@ class Etnia extends Model
 {
     use HasFactory;
     protected $table = 'etnias';
-    protected $fillable = ['etnia_id', 'etnia'];
+    protected $fillable = ['etnia'];
     protected $primaryKey = 'etnia_id';
     public $incrementing = true;
     protected $keyType = 'int';

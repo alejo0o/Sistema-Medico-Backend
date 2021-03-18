@@ -10,7 +10,6 @@ class Evolucion extends Model
     use HasFactory;
     protected $table = 'evoluciones';
     protected $fillable = [
-        'evolucion_id',
         'historia_clinica_id',
         'fecha',
         'motivo_consulta',

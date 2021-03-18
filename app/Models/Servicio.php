@@ -10,10 +10,10 @@ class Servicio extends Model
     use HasFactory;
     protected $table = 'servicios';
     protected $fillable = [
-        'servicio_id',
         'consultorio_id',
         'titulo',
         'imagen',
+        'descripcion'
     ];
     protected $primaryKey = 'servicio_id';
     public $incrementing = true;

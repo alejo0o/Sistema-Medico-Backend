@@ -17,6 +17,7 @@ class Categorias extends Migration
             $table->increments('categoria_id')->unique();
             $table->integer('capitulo_id')->nullable();
             $table->char('codigo', 5);
+            $table->text('descripcion');
             //$table->timestamps();
 
             $table->foreign('capitulo_id')->references('capitulo_id')->on('capitulos');

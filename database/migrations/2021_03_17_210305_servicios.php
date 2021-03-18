@@ -18,6 +18,7 @@ class Servicios extends Migration
             $table->integer('consultorio_id')->nullable();
             $table->char('titulo', 80);
             $table->char('imagen', 150);
+            $table->text('descripcion');
             //$table->timestamps();
 
 

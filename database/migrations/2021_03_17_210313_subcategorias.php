@@ -17,7 +17,7 @@ class Subcategorias extends Migration
             $table->increments('subcategoria_id')->unique();
             $table->integer('categoria_id')->nullable();
             $table->char('codigo', 5);
-            $table->char('descripcion', 256);
+            $table->text('descripcion');
             //$table->timestamps();
 
 

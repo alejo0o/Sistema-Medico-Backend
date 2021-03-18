@@ -10,7 +10,6 @@ class Medico extends Model
     use HasFactory;
     protected $table = 'medicos';
     protected $fillable = [
-        'medico_id',
         'consultorio_id',
         'cedula',
         'nombres',

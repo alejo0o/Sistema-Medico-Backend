@@ -9,7 +9,9 @@ class NivelDeInstruccion extends Model
 {
     use HasFactory;
     protected $table = 'niveles_de_instruccion';
-    protected $fillable = ['nivel_de_instruccion_id', 'nivel_de_instruccion'];
+    protected $fillable = [
+        'nivel_de_instruccion'
+    ];
     protected $primaryKey = 'nivel_de_instruccion_id';
     public $incrementing = true;
     protected $keyType = 'int';
