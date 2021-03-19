@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+
+
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,5 +18,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+
+        /*-------Descomentar para generar las tablas independientes de etnias, estado civil, nivel de instruccion y tipo de sangre-----*/
+        //\App\Models\Etnia::factory(6)->create();
+        //\App\Models\NivelDeInstruccion::factory(8)->create();
+        //\App\Models\TipoDeSangre::factory(9)->create();
+        //\App\Models\EstadoCivil::factory(4)->create();
+        /*---------------------------------------------------------------------------------------------------------------------------*/
+
+        /*----------Genera Pacientes, Historias Clinicas y Evoluciones----------*/
+        //\App\Models\Paciente::factory(1)->create();
+        //\App\Models\HistoriaClinica::factory(1)->create();
+        //\App\Models\Evolucion::factory(1)->create();
+        /*---------------------------------------------------------------------------------------------------------------------------*/
+
+        /*-------------GENERA TANTO PACIENTES COMO HISTORIAS COMO EVOLUCIONES CON SUS RESPECTIVAS ENFERMEDADES ASOCIADAS (RECOMENDADO)---------*/
+        \App\Models\SubcategoriaEvolucion::factory(100)->create();
     }
 }

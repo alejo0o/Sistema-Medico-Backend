@@ -15,7 +15,7 @@ class HistoriasClinicas extends Migration
     {
         Schema::create('historias_clinicas', function (Blueprint $table) {
             $table->increments('historia_clinica_id')->unique();
-            $table->integer('paciente_id')->nullable();
+            $table->integer('paciente_id')->unique()->nullable();
             $table->text('alergias');
             $table->text('antecedentes_patologicos');
             $table->text('antecedentes_quirurgicos');

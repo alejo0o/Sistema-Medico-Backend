@@ -23,13 +23,13 @@ class Pacientes extends Migration
             $table->char('apellidos', 60);
             $table->char('cedula', 15)->unique();
             $table->date('fechanacimiento');
-            $table->char('lugarnacimiento', 50);
-            $table->char('direccion', 50);
-            $table->char('telefono', 15);
-            $table->char('ocupacion', 100);
+            $table->char('lugarnacimiento', 150);
+            $table->char('direccion', 150);
+            $table->char('telefono', 25);
+            $table->char('ocupacion', 150);
             $table->integer('numero_hijos');
             $table->char('contacto_emergencia_nombre', 100)->nullable();
-            $table->char('contacto_emergencia_telefono', 15)->nullable();
+            $table->char('contacto_emergencia_telefono', 25)->nullable();
             //$table->timestamps();
 
 
