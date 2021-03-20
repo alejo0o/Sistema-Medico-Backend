@@ -28,7 +28,10 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         Categoria::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Categoria $categoria)
+    public function show($id)
     {
-        return $categoria;
+        return Categoria::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
+        $categoria = Categoria::findOrFail($id);
         $categoria->capitulo_id = $request->get('capitulo_id');
         $categoria->codigo = $request->get('codigo');
         $categoria->descripcion = $request->get('descripcion');
@@ -65,9 +69,9 @@ class CategoriaController extends Controller
      * @param  \App\Models\Categoria  $categoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
-        $categoria->delete();
+        Categoria::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

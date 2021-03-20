@@ -33,5 +33,6 @@ Route::apiResource('v1/nivelesdeinstruccion', App\Http\Controllers\Api\V1\NivelD
 Route::apiResource('v1/pacientes', App\Http\Controllers\Api\V1\PacienteController::class);
 Route::apiResource('v1/servicios', App\Http\Controllers\Api\V1\ServicioController::class);
 Route::apiResource('v1/subcategorias', App\Http\Controllers\Api\V1\SubcategoriaController::class);
+Route::apiResource('v1/subcategoriasevoluciones', App\Http\Controllers\Api\V1\SubcategoriaEvolucionContoller::class);
 Route::apiResource('v1/tiposdesangre', App\Http\Controllers\Api\V1\TipoDeSangreController::class);
 Route::apiResource('v1/tratamientos', App\Http\Controllers\Api\V1\TratamientoController::class);

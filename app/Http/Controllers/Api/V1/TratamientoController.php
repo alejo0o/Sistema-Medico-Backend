@@ -29,7 +29,10 @@ class TratamientoController extends Controller
     public function store(Request $request)
     {
         Tratamiento::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -38,9 +41,9 @@ class TratamientoController extends Controller
      * @param  \App\Models\Tratamiento  $tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function show(Tratamiento $tratamiento)
+    public function show($id)
     {
-        return $tratamiento;
+        return Tratamiento::find($id);
     }
 
     /**
@@ -50,8 +53,9 @@ class TratamientoController extends Controller
      * @param  \App\Models\Tratamiento  $tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tratamiento $tratamiento)
+    public function update(Request $request, $id)
     {
+        $tratamiento = Tratamiento::findOrFail($id);
         $tratamiento->nombre = $request->get('nombre');
         $tratamiento->precio = $request->get('precio');
         $tratamiento->save();
@@ -64,9 +68,9 @@ class TratamientoController extends Controller
      * @param  \App\Models\Tratamiento  $tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tratamiento $tratamiento)
+    public function destroy($id)
     {
-        $tratamiento->delete();
+        Tratamiento::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

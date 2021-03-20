@@ -28,7 +28,10 @@ class ConsultorioController extends Controller
     public function store(Request $request)
     {
         Consultorio::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class ConsultorioController extends Controller
      * @param  \App\Models\Consultorio  $consultorio
      * @return \Illuminate\Http\Response
      */
-    public function show(Consultorio $consultorio)
+    public function show($id)
     {
-        return $consultorio;
+        return Consultorio::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class ConsultorioController extends Controller
      * @param  \App\Models\Consultorio  $consultorio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Consultorio $consultorio)
+    public function update(Request $request, $id)
     {
+        $consultorio = Consultorio::findOrFail($id);
         $consultorio->nombre = $request->get('nombre');
         $consultorio->descripcion = $request->get('descripcion');
         $consultorio->vision = $request->get('vision');

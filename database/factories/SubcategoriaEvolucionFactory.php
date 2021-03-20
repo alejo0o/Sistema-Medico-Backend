@@ -24,7 +24,7 @@ class SubcategoriaEvolucionFactory extends Factory
     {
         return [
             'evolucion_id' => Evolucion::factory(),
-            'subcategoria_id' => $this->faker->numberBetween(1, 14418),
+            'subcategoria_id' => $this->faker->numberBetween(1, 6), //para testing cambiar el limite a 6
         ];
     }
 }

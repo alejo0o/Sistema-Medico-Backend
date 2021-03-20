@@ -28,7 +28,10 @@ class NivelDeInstruccionController extends Controller
     public function store(Request $request)
     {
         NivelDeInstruccion::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class NivelDeInstruccionController extends Controller
      * @param  \App\Models\NivelDeInstruccion  $nivelDeInstruccion
      * @return \Illuminate\Http\Response
      */
-    public function show(NivelDeInstruccion $nivelDeInstruccion)
+    public function show($id)
     {
-        return $nivelDeInstruccion;
+        return NivelDeInstruccion::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class NivelDeInstruccionController extends Controller
      * @param  \App\Models\NivelDeInstruccion  $nivelDeInstruccion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, NivelDeInstruccion $nivelDeInstruccion)
+    public function update(Request $request, $id)
     {
+        $nivelDeInstruccion = NivelDeInstruccion::findOrFail($id);
         $nivelDeInstruccion->nivel_de_instruccion = $request->get('nivel_de_instruccion');
         $nivelDeInstruccion->save();
 
@@ -63,9 +67,9 @@ class NivelDeInstruccionController extends Controller
      * @param  \App\Models\NivelDeInstruccion  $nivelDeInstruccion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NivelDeInstruccion $nivelDeInstruccion)
+    public function destroy($id)
     {
-        $nivelDeInstruccion->delete();
+        NivelDeInstruccion::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

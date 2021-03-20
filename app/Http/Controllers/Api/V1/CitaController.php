@@ -28,7 +28,10 @@ class CitaController extends Controller
     public function store(Request $request)
     {
         Cita::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class CitaController extends Controller
      * @param  \App\Models\Cita  $cita
      * @return \Illuminate\Http\Response
      */
-    public function show(Cita $cita)
+    public function show($id)
     {
-        return $cita;
+        return Cita::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class CitaController extends Controller
      * @param  \App\Models\Cita  $cita
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cita $cita)
+    public function update(Request $request, $id)
     {
+        $cita = Cita::findOrFail($id);
         $cita->paciente_id = $request->get('paciente_id');
         $cita->medico_id = $request->get('medico_id');
         $cita->fecha = $request->get('fecha');
@@ -67,9 +71,9 @@ class CitaController extends Controller
      * @param  \App\Models\Cita  $cita
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cita $cita)
+    public function destroy($id)
     {
-        $cita->delete();
+        Cita::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

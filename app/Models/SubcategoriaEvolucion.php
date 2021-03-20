@@ -9,10 +9,10 @@ class SubcategoriaEvolucion extends Model
 {
     use HasFactory;
     protected $table = 'subcategorias_evoluciones';
-    /*protected $fillable = [
+    protected $fillable = [
         'evolucion_id',
         'subcategoria_id',
-    ];*/
+    ];
     protected $primaryKey = 'evolucion_id';
 
     protected $keyType = 'int';

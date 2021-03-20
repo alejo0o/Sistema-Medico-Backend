@@ -29,7 +29,10 @@ class ServicioController extends Controller
     public function store(Request $request)
     {
         Servicio::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -38,9 +41,9 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function show(Servicio $servicio)
+    public function show($id)
     {
-        return $servicio;
+        return Servicio::find($id);
     }
 
     /**
@@ -50,8 +53,9 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Servicio $servicio)
+    public function update(Request $request, $id)
     {
+        $servicio = Servicio::findOrFail($id);
         $servicio->consultorio_id = $request->get('consultorio_id');
         $servicio->titulo = $request->get('titulo');
         $servicio->imagen = $request->get('imagen');
@@ -67,9 +71,9 @@ class ServicioController extends Controller
      * @param  \App\Models\Servicio  $servicio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Servicio $servicio)
+    public function destroy($id)
     {
-        $servicio->delete();
+        Servicio::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

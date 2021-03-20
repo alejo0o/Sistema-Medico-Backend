@@ -29,7 +29,10 @@ class SubcategoriaController extends Controller
     public function store(Request $request)
     {
         Subcategoria::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -38,9 +41,9 @@ class SubcategoriaController extends Controller
      * @param  \App\Models\Subcategoria  $subcategoria
      * @return \Illuminate\Http\Response
      */
-    public function show(Subcategoria $subcategoria)
+    public function show($id)
     {
-        return $subcategoria;
+        return Subcategoria::find($id);
     }
 
     /**
@@ -50,8 +53,9 @@ class SubcategoriaController extends Controller
      * @param  \App\Models\Subcategoria  $subcategoria
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subcategoria $subcategoria)
+    public function update(Request $request, $id)
     {
+        $subcategoria = Subcategoria::findOrFail($id);
         $subcategoria->categoria_id = $request->get('categoria_id');
         $subcategoria->codigo = $request->get('codigo');
         $subcategoria->descripcion = $request->get('descripcion');
@@ -66,9 +70,9 @@ class SubcategoriaController extends Controller
      * @param  \App\Models\Subcategoria  $subcategoria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcategoria $subcategoria)
+    public function destroy($id)
     {
-        $subcategoria->delete();
+        Subcategoria::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

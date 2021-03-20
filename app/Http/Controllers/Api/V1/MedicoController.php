@@ -28,7 +28,10 @@ class MedicoController extends Controller
     public function store(Request $request)
     {
         Medico::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class MedicoController extends Controller
      * @param  \App\Models\Medico  $medico
      * @return \Illuminate\Http\Response
      */
-    public function show(Medico $medico)
+    public function show($id)
     {
-        return $medico;
+        return Medico::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class MedicoController extends Controller
      * @param  \App\Models\Medico  $medico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Medico $medico)
+    public function update(Request $request, $id)
     {
+        $medico = Medico::findOrFail($id);
         $medico->consultorio_id = $request->get('consultorio_id');
         $medico->cedula = $request->get('cedula');
         $medico->nombres = $request->get('nombres');
@@ -66,9 +70,9 @@ class MedicoController extends Controller
      * @param  \App\Models\Medico  $medico
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Medico $medico)
+    public function destroy($id)
     {
-        $medico->delete();
+        Medico::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

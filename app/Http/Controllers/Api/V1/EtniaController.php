@@ -28,7 +28,10 @@ class EtniaController extends Controller
     public function store(Request $request)
     {
         Etnia::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class EtniaController extends Controller
      * @param  \App\Models\Etnia  $etnia
      * @return \Illuminate\Http\Response
      */
-    public function show(Etnia $etnia)
+    public function show($id)
     {
-        return $etnia;
+        return Etnia::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class EtniaController extends Controller
      * @param  \App\Models\Etnia  $etnia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Etnia $etnia)
+    public function update(Request $request, $id)
     {
+        $etnia = Etnia::findOrFail($id);
         $etnia->etnia = $request->get('etnia');
         $etnia->save();
 
@@ -63,9 +67,9 @@ class EtniaController extends Controller
      * @param  \App\Models\Etnia  $etnia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Etnia $etnia)
+    public function destroy($id)
     {
-        $etnia->delete();
+        Etnia::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

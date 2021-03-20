@@ -29,7 +29,10 @@ class TipoDeSangreController extends Controller
     public function store(Request $request)
     {
         TipoDeSangre::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -38,9 +41,9 @@ class TipoDeSangreController extends Controller
      * @param  \App\Models\TipoDeSangre  $tipoDeSangre
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoDeSangre $tipoDeSangre)
+    public function show($id)
     {
-        return $tipoDeSangre;
+        return TipoDeSangre::find($id);
     }
 
     /**
@@ -50,8 +53,9 @@ class TipoDeSangreController extends Controller
      * @param  \App\Models\TipoDeSangre  $tipoDeSangre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoDeSangre $tipoDeSangre)
+    public function update(Request $request, $id)
     {
+        $tipoDeSangre = TipoDeSangre::findOrFail($id);
         $tipoDeSangre->tipo_sangre = $request->get('tipo_sangre');
         $tipoDeSangre->save();
 
@@ -64,9 +68,9 @@ class TipoDeSangreController extends Controller
      * @param  \App\Models\TipoDeSangre  $tipoDeSangre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoDeSangre $tipoDeSangre)
+    public function destroy($id)
     {
-        $tipoDeSangre->delete();
+        TipoDeSangre::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

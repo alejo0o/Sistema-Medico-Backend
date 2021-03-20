@@ -28,7 +28,10 @@ class EstadoCivilController extends Controller
     public function store(Request $request)
     {
         EstadoCivil::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class EstadoCivilController extends Controller
      * @param  \App\Models\EstadoCivil  $estadoCivil
      * @return \Illuminate\Http\Response
      */
-    public function show(EstadoCivil $estadoCivil)
+    public function show($id)
     {
-        return $estadoCivil;
+        return EstadoCivil::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class EstadoCivilController extends Controller
      * @param  \App\Models\EstadoCivil  $estadoCivil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EstadoCivil $estadoCivil)
+    public function update(Request $request, $id)
     {
+        $estadoCivil = EstadoCivil::findOrFail($id);
         $estadoCivil->estado_civil = $request->get('estado_civil');
         $estadoCivil->save();
 
@@ -63,9 +67,9 @@ class EstadoCivilController extends Controller
      * @param  \App\Models\EstadoCivil  $estadoCivil
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EstadoCivil $estadoCivil)
+    public function destroy($id)
     {
-        $estadoCivil->delete();
+        EstadoCivil::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

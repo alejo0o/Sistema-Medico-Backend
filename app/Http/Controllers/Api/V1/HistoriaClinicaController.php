@@ -28,7 +28,10 @@ class HistoriaClinicaController extends Controller
     public function store(Request $request)
     {
         HistoriaClinica::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class HistoriaClinicaController extends Controller
      * @param  \App\Models\HistoriaClinica  $historiaClinica
      * @return \Illuminate\Http\Response
      */
-    public function show(HistoriaClinica $historiaClinica)
+    public function show($id)
     {
-        return $historiaClinica;
+        return HistoriaClinica::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class HistoriaClinicaController extends Controller
      * @param  \App\Models\HistoriaClinica  $historiaClinica
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, HistoriaClinica $historiaClinica)
+    public function update(Request $request, $id)
     {
+        $historiaClinica = HistoriaClinica::findOrFail($id);
         $historiaClinica->paciente_id = $request->get('paciente_id');
         $historiaClinica->alergias = $request->get('alergias');
         $historiaClinica->antecedentes_patologicos = $request->get('antecedentes_patologicos');
@@ -74,9 +78,9 @@ class HistoriaClinicaController extends Controller
      * @param  \App\Models\HistoriaClinica  $historiaClinica
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HistoriaClinica $historiaClinica)
+    public function destroy($id)
     {
-        $historiaClinica->delete();
+        HistoriaClinica::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

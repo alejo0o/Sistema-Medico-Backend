@@ -28,7 +28,10 @@ class CapituloController extends Controller
     public function store(Request $request)
     {
         Capitulo::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class CapituloController extends Controller
      * @param  \App\Models\Capitulo  $capitulo
      * @return \Illuminate\Http\Response
      */
-    public function show(Capitulo $capitulo)
+    public function show($id)
     {
-        return $capitulo;
+        return Capitulo::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class CapituloController extends Controller
      * @param  \App\Models\Capitulo  $capitulo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Capitulo $capitulo)
+    public function update(Request $request, $id)
     {
+        $capitulo = Capitulo::findOrFail($id);
         $capitulo->codigo = $request->get('codigo');
         $capitulo->descripcion = $request->get('descripcion');
         $capitulo->save();
@@ -63,9 +67,9 @@ class CapituloController extends Controller
      * @param  \App\Models\Capitulo  $capitulo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Capitulo $capitulo)
+    public function destroy($id)
     {
-        $capitulo->delete();
+        Capitulo::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

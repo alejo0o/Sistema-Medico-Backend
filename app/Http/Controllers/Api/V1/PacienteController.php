@@ -29,7 +29,10 @@ class PacienteController extends Controller
     public function store(Request $request)
     {
         Paciente::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -38,9 +41,9 @@ class PacienteController extends Controller
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function show(Paciente $paciente)
+    public function show($id)
     {
-        return $paciente;
+        return Paciente::find($id);
     }
 
     /**
@@ -50,8 +53,9 @@ class PacienteController extends Controller
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Paciente $paciente)
+    public function update(Request $request, $id)
     {
+        $paciente = Paciente::findOrFail($id);
         $paciente->tipo_de_sangre_id = $request->get('tipo_de_sangre_id');
         $paciente->etnia_id = $request->get('etnia_id');
         $paciente->nivel_de_instruccion_id = $request->get('nivel_de_instruccion_id');
@@ -79,9 +83,9 @@ class PacienteController extends Controller
      * @param  \App\Models\Paciente  $paciente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Paciente $paciente)
+    public function destroy($id)
     {
-        $paciente->delete();
+        Paciente::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

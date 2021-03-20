@@ -28,7 +28,10 @@ class EspecialidadController extends Controller
     public function store(Request $request)
     {
         Especialidad::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class EspecialidadController extends Controller
      * @param  \App\Models\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function show(Especialidad $especialidad)
+    public function show($id)
     {
-        return $especialidad;
+        return Especialidad::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class EspecialidadController extends Controller
      * @param  \App\Models\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Especialidad $especialidad)
+    public function update(Request $request, $id)
     {
+        $especialidad = Especialidad::findOrFail($id);
         $especialidad->especialidad = $request->get('especialidad');
         $especialidad->save();
 
@@ -63,9 +67,9 @@ class EspecialidadController extends Controller
      * @param  \App\Models\Especialidad  $especialidad
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Especialidad $especialidad)
+    public function destroy($id)
     {
-        $especialidad->delete();
+        Especialidad::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

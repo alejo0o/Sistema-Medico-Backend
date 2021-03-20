@@ -28,7 +28,10 @@ class EvolucionController extends Controller
     public function store(Request $request)
     {
         Evolucion::create($request->all())->save();
-        return $request->all();
+        return response()->json(
+            $request->all(),
+            201
+        );
     }
 
     /**
@@ -37,9 +40,9 @@ class EvolucionController extends Controller
      * @param  \App\Models\Evolucion  $evolucion
      * @return \Illuminate\Http\Response
      */
-    public function show(Evolucion $evolucion)
+    public function show($id)
     {
-        return $evolucion;
+        return Evolucion::find($id);
     }
 
     /**
@@ -49,8 +52,9 @@ class EvolucionController extends Controller
      * @param  \App\Models\Evolucion  $evolucion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Evolucion $evolucion)
+    public function update(Request $request, $id)
     {
+        $evolucion = Evolucion::findOrFail($id);
         $evolucion->historia_clinica_id = $request->get('historia_clinica_id');
         $evolucion->fecha = $request->get('fecha');
         $evolucion->motivo_consulta = $request->get('motivo_consulta');
@@ -70,9 +74,9 @@ class EvolucionController extends Controller
      * @param  \App\Models\Evolucion  $evolucion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Evolucion $evolucion)
+    public function destroy($id)
     {
-        $evolucion->delete();
+        Evolucion::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);

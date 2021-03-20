@@ -11,14 +11,17 @@ class HistoriaClinica extends Model
     protected $table = 'historias_clinicas';
     protected $fillable = [
         'paciente_id',
+        'alergias',
         'antecedentes_patologicos',
         'antecedentes_quirurgicos',
-        'alergias',
+        'antecedentes_familiares',
+        'medicamentos_subministrados',
         'gestas',
         'partos',
         'cesareas',
         'abortos',
-        'metodo_anticonceptivo'
+        'metodo_anticonceptivo',
+        'habitos'
     ];
     protected $primaryKey = 'historia_clinica_id';
     public $incrementing = true;

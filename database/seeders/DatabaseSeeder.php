@@ -21,18 +21,17 @@ class DatabaseSeeder extends Seeder
 
         /*-------Descomentar para generar las tablas independientes de etnias, estado civil, nivel de instruccion y tipo de sangre-----*/
         //\App\Models\Etnia::factory(6)->create();
-        //\App\Models\NivelDeInstruccion::factory(8)->create();
-        //\App\Models\TipoDeSangre::factory(9)->create();
-        //\App\Models\EstadoCivil::factory(4)->create();
-        /*---------------------------------------------------------------------------------------------------------------------------*/
-
-        /*----------Genera Pacientes, Historias Clinicas y Evoluciones----------*/
-        //\App\Models\Paciente::factory(1)->create();
-        //\App\Models\HistoriaClinica::factory(1)->create();
-        //\App\Models\Evolucion::factory(1)->create();
+        //\App\Models\NivelDeInstruccion::factory(5)->create();
+        //\App\Models\TipoDeSangre::factory(8)->create();
+        //\App\Models\EstadoCivil::factory(5)->create();
+        //\App\Models\Subcategoria::factory(1)->create();
         /*---------------------------------------------------------------------------------------------------------------------------*/
 
         /*-------------GENERA TANTO PACIENTES COMO HISTORIAS COMO EVOLUCIONES CON SUS RESPECTIVAS ENFERMEDADES ASOCIADAS (RECOMENDADO)---------*/
-        \App\Models\SubcategoriaEvolucion::factory(100)->create();
+        //\App\Models\SubcategoriaEvolucion::factory(100)->create();
+        /*---------------------------------------------------------------------------------------------------------------------------*/
+
+
+        //\App\Models\Evolucion::factory(2)->create();
     }
 }
