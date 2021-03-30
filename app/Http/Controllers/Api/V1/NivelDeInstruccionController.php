@@ -16,7 +16,7 @@ class NivelDeInstruccionController extends Controller
      */
     public function index()
     {
-        return new DataCollection(NivelDeInstruccion::paginate(5));
+        return NivelDeInstruccion::all();
     }
 
     /**

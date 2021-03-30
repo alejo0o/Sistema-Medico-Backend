@@ -17,6 +17,7 @@ class TestingSeeder extends Seeder
         \App\Models\NivelDeInstruccion::factory(5)->create();
         \App\Models\TipoDeSangre::factory(8)->create();
         \App\Models\EstadoCivil::factory(5)->create();
+        \App\Models\Genero::factory(2)->create();
         \App\Models\Subcategoria::factory(6)->create();
     }
 }

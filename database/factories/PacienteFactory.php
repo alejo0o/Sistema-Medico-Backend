@@ -30,6 +30,7 @@ class PacienteFactory extends Factory
             'etnia_id' =>  $this->faker->randomElement(array(1, 2, 3, 4, 5, 6)),
             'nivel_de_instruccion_id' => $this->faker->randomElement(array(1, 2, 3, 4, 5)),
             'estado_civil_id' => $this->faker->randomElement(array(1, 2, 3, 4, 5)),
+            'genero_id' => $this->faker->randomElement(array(1, 2)),
             'nombres' => $this->faker->firstName('male' | 'female'),
             'apellidos' => $this->faker->lastName,
             'cedula' => $this->faker->unique()->numberBetween(1000, 9000),

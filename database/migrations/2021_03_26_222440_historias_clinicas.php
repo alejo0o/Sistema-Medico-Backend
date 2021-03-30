@@ -21,10 +21,10 @@ class HistoriasClinicas extends Migration
             $table->text('antecedentes_quirurgicos');
             $table->text('antecedentes_familiares');
             $table->text('medicamentos_subministrados');
-            $table->char('gestas', 15);
-            $table->char('partos', 15);
-            $table->char('cesareas', 15);
-            $table->char('abortos', 15);
+            $table->char('gestas', 15)->nullable();
+            $table->char('partos', 15)->nullable();
+            $table->char('cesareas', 15)->nullable();
+            $table->char('abortos', 15)->nullable();
             $table->char('metodo_anticonceptivo', 30);
             $table->text('habitos')->nullable();
             //$table->timestamps();

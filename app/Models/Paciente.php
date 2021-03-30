@@ -14,6 +14,7 @@ class Paciente extends Model
         'etnia_id',
         'nivel_de_instruccion_id',
         'estado_civil_id',
+        'genero_id',
         'nombres',
         'apellidos',
         'cedula',

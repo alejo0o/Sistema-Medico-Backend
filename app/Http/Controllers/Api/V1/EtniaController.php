@@ -16,7 +16,7 @@ class EtniaController extends Controller
      */
     public function index()
     {
-        return new DataCollection(Etnia::paginate(5));
+        return Etnia::all();
     }
 
     /**

@@ -46,20 +46,19 @@ class PacienteControllerTest extends TestCase
         $this->assertDatabaseHas('pacientes', $paciente2);
 
         //Comprueba que la peticio GET ALL a la API se ejecuto correctamente
-        //Una peticion get contiene meta y data(con los registros paginados) por lo que se comprueba que contenga esta información
+        //Una peticion get contiene data(con los registros paginados) por lo que se comprueba que contenga esta información
         $this->getJson("/api/v1/pacientes")
             ->assertJson(
                 fn (AssertableJson $json) =>
-                $json->has('meta')
-                    ->has(
-                        'data',
-                        2,
-                        fn ($json) => //siempre trae el primer registro en la base
-                        $json->where('paciente_id', 1)
-                            ->where('nombres', $paciente['nombres'])
-                            ->where('apellidos', $paciente['apellidos'])
-                            ->etc()
-                    )
+                $json->has(
+                    'data',
+                    2,
+                    fn ($json) => //siempre trae el primer registro en la base
+                    $json->where('paciente_id', (string) 1)
+                        ->where('nombres', $paciente['nombres'])
+                        ->where('apellidos', $paciente['apellidos'])
+                        ->etc()
+                )
             );
 
         //Comprueba que la peticion GET por ID a la API se ejecuto correctamente

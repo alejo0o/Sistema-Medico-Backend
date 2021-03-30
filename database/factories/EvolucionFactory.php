@@ -28,7 +28,6 @@ class EvolucionFactory extends Factory
             'motivo_consulta' => $this->faker->text(150),
             'fecha_ultima_menstruacion' => $this->faker->randomElement(array($this->faker->date('Y/m/d', 'now'), null)),
             'procedimiento' => $this->faker->text(150),
-            'diagnostico' => $this->faker->text(150),
             'tratamiento' => $this->faker->text(150),
             'proximo_control' => $this->faker->randomElement(array($this->faker->date('Y/m/d', 'now'), null)),
         ];

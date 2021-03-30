@@ -15,7 +15,6 @@ class Evolucion extends Model
         'motivo_consulta',
         'fecha_ultima_menstruacion',
         'procedimiento',
-        'diagnostico',
         'tratamiento',
         'proximo_control'
     ];

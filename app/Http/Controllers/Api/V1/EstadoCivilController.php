@@ -16,7 +16,7 @@ class EstadoCivilController extends Controller
      */
     public function index()
     {
-        return new DataCollection(EstadoCivil::paginate(5));
+        return EstadoCivil::all();
     }
 
     /**

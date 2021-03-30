@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Paciente;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
-
+use Illuminate\Support\Facades\DB;
 
 class PacienteController extends Controller
 {
@@ -17,7 +17,16 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        return new DataCollection(Paciente::paginate(5));
+        $pacientes = DB::table('pacientes')
+            ->select('*')
+            ->join('estados_civiles', 'pacientes.estado_civil_id', '=', 'estados_civiles.estado_civil_id')
+            ->join('niveles_de_instruccion', 'pacientes.nivel_de_instruccion_id', '=', 'niveles_de_instruccion.nivel_de_instruccion_id')
+            ->join('tipos_de_sangre', 'pacientes.tipo_de_sangre_id', '=', 'tipos_de_sangre.tipo_de_sangre_id')
+            ->join('etnias', 'pacientes.etnia_id', '=', 'etnias.etnia_id')
+            ->join('generos', 'pacientes.genero_id', '=', 'generos.genero_id')
+            ->paginate(5);
+        return json_encode($pacientes);
+        //return new DataCollection(Paciente::paginate(5));
     }
 
     /**
@@ -60,6 +69,7 @@ class PacienteController extends Controller
         $paciente->etnia_id = $request->get('etnia_id');
         $paciente->nivel_de_instruccion_id = $request->get('nivel_de_instruccion_id');
         $paciente->estado_civil_id = $request->get('estado_civil_id');
+        $paciente->genero_id = $request->get('genero_id');
         $paciente->nombres = $request->get('nombres');
         $paciente->apellidos = $request->get('apellidos');
         $paciente->cedula = $request->get('cedula');

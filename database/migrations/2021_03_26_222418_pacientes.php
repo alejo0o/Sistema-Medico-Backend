@@ -19,6 +19,7 @@ class Pacientes extends Migration
             $table->integer('etnia_id')->nullable();
             $table->integer('nivel_de_instruccion_id')->nullable();
             $table->integer('estado_civil_id')->nullable();
+            $table->integer('genero_id')->nullable();
             $table->char('nombres', 60);
             $table->char('apellidos', 60);
             $table->char('cedula', 15)->unique();
@@ -37,6 +38,7 @@ class Pacientes extends Migration
             $table->foreign('etnia_id')->references('etnia_id')->on('etnias');
             $table->foreign('nivel_de_instruccion_id')->references('nivel_de_instruccion_id')->on('niveles_de_instruccion');
             $table->foreign('estado_civil_id')->references('estado_civil_id')->on('estados_civiles');
+            $table->foreign('genero_id')->references('genero_id')->on('generos');
         });
     }
 

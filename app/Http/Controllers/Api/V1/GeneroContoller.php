@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\TipoDeSangre;
+use App\Models\Genero;
 use Illuminate\Http\Request;
-use App\Http\Resources\V1\DataCollection;
 
-
-class TipoDeSangreController extends Controller
+class GeneroContoller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +15,7 @@ class TipoDeSangreController extends Controller
      */
     public function index()
     {
-        return TipoDeSangre::all();
+        return Genero::all();
     }
 
     /**
@@ -28,7 +26,7 @@ class TipoDeSangreController extends Controller
      */
     public function store(Request $request)
     {
-        TipoDeSangre::create($request->all())->save();
+        Genero::create($request->all())->save();
         return response()->json(
             $request->all(),
             201
@@ -38,39 +36,39 @@ class TipoDeSangreController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TipoDeSangre  $tipoDeSangre
+     * @param  \App\Models\Genero  $genero
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return TipoDeSangre::find($id);
+        return Genero::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\TipoDeSangre  $tipoDeSangre
+     * @param  \App\Models\Genero  $genero
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $tipoDeSangre = TipoDeSangre::findOrFail($id);
-        $tipoDeSangre->tipo_sangre = $request->get('tipo_sangre');
-        $tipoDeSangre->save();
+        $genero = Genero::findOrFail($id);
+        $genero->genero = $request->get('genero');
+        $genero->save();
 
-        return  $tipoDeSangre;
+        return  $genero;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TipoDeSangre  $tipoDeSangre
+     * @param  \App\Models\Genero  $genero
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        TipoDeSangre::findOrFail($id)->delete();
+        Genero::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'
         ], 204);
