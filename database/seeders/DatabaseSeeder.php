@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         /*---------------------------------------------------------------------------------------------------------------------------*/
 
         /*-------------GENERA TANTO PACIENTES COMO HISTORIAS COMO EVOLUCIONES CON SUS RESPECTIVAS ENFERMEDADES ASOCIADAS (RECOMENDADO)---------*/
-        \App\Models\SubcategoriaEvolucion::factory(100)->create();
+        \App\Models\Evolucion::factory(100)->create();
         /*---------------------------------------------------------------------------------------------------------------------------*/
 
 

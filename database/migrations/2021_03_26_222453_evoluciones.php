@@ -20,12 +20,13 @@ class Evoluciones extends Migration
             $table->text('motivo_consulta');
             $table->date('fecha_ultima_menstruacion')->nullable();
             $table->text('procedimiento');
+            $table->json('diagnostico');
             $table->text('tratamiento');
             $table->date('proximo_control')->nullable();
             //$table->timestamps();
 
 
-            $table->foreign('historia_clinica_id')->references('historia_clinica_id')->on('historias_clinicas');
+            $table->foreign('historia_clinica_id')->references('historia_clinica_id')->on('historias_clinicas')->onDelete('cascade');
         });
     }
 

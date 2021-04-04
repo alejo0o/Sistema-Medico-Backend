@@ -60,6 +60,7 @@ class EvolucionController extends Controller
         $evolucion->motivo_consulta = $request->get('motivo_consulta');
         $evolucion->fecha_ultima_menstruacion = $request->get('fecha_ultima_menstruacion');
         $evolucion->procedimiento = $request->get('procedimiento');
+        $evolucion->diagnostico = $request->get('diagnostico');
         $evolucion->tratamiento = $request->get('tratamiento');
         $evolucion->proximo_control = $request->get('proximo_control');
         $evolucion->save();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CustomResourcesController extends Controller
 {
@@ -98,32 +99,6 @@ class CustomResourcesController extends Controller
             ->paginate(5);
         return json_encode($evoluciones);
     }
-    //Retorna las enfermedades de un paciente en base a su id y evolucion id
-    public function getEnfermedadesPacienteEvolucion($id_paciente, $id_evolucion)
-    {
-        $evoluciones = DB::table('pacientes')
-            ->join('historias_clinicas', 'historias_clinicas.paciente_id', '=', 'pacientes.paciente_id')
-            ->join('evoluciones', 'evoluciones.historia_clinica_id', '=', 'historias_clinicas.historia_clinica_id')
-            ->join('subcategorias_evoluciones', 'subcategorias_evoluciones.evolucion_id', '=', 'evoluciones.evolucion_id')
-            ->join('subcategorias', 'subcategorias.subcategoria_id', '=', 'subcategorias_evoluciones.subcategoria_id')
-            ->join('categorias', 'categorias.categoria_id', '=', 'subcategorias.categoria_id')
-            ->join('capitulos', 'capitulos.capitulo_id', '=', 'categorias.capitulo_id')
-            ->select(
-                'subcategorias.subcategoria_id',
-                'subcategorias.codigo as subcategoria_codigo',
-                'subcategorias.descripcion as subcategoria_descripcion',
-                'categorias.categoria_id',
-                'categorias.codigo as categorias_codigo',
-                'categorias.descripcion as categorias_descripcion',
-                'capitulos.capitulo_id',
-                'capitulos.codigo as capitulo_codigo',
-                'capitulos.descripcion as capitulo_descripcion'
-            )
-            ->where('pacientes.paciente_id', '=', $id_paciente)
-            ->where('evoluciones.evolucion_id', '=', $id_evolucion)
-            ->get();
-        return json_encode($evoluciones);
-    }
     //Retorna las Subcategorias en base al codigo de categoria
     public function getSubcategoriasCategoriasCapitulos($codigo_categoria)
     {
@@ -142,23 +117,38 @@ class CustomResourcesController extends Controller
         return json_encode($subcategorias);
     }
     //Retorna las categorias en base al codigo de categoria
-    public function getCategorias($codigo)
+    public function getCategorias($busqueda)
     {
         $categorias = DB::table('categorias')
             ->select('categorias.*')
-            ->where('categorias.codigo', 'like', "$codigo%")
+            ->where('categorias.codigo', 'ilike', "$busqueda%")
+            ->orWhere('categorias.descripcion', 'ilike', "%$busqueda%")
             ->paginate(15);
 
         return json_encode($categorias);
     }
-    //Retorna las subcategorias en base al codigo de subcategoria
-    public function getSubcategorias($codigo)
+    //Retorna las subcategorias en base al codigo o nombre de subcategoria
+    public function getSubcategorias($busqueda)
     {
+        //$busqueda = Str::ascii($busqueda);
         $subcategorias = DB::table('subcategorias')
             ->select('subcategorias.*')
-            ->where('subcategorias.codigo', 'like', "$codigo%")
+            ->where('subcategorias.codigo', 'ilike', "$busqueda%")
+            ->orWhere('subcategorias.descripcion', 'ilike', "%$busqueda%")
             ->paginate(15);
 
         return json_encode($subcategorias);
+    }
+    //Retorna la busqueda de pacientes por cédula o por nombre
+    public function getPacientesxCedulaoNombre($busqueda)
+    {
+
+        $pacientes = DB::table('pacientes')
+            ->select('pacientes.*')
+            ->where('pacientes.cedula', 'ilike', "$busqueda%")
+            ->orWhereRaw("concat(trim(pacientes.nombres),' ',trim(pacientes.apellidos)) ilike ?", ["%$busqueda%"])
+            ->paginate(5);
+
+        return json_encode($pacientes);
     }
 }

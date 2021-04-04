@@ -34,7 +34,6 @@ Route::apiResource('v1/nivelesdeinstruccion', App\Http\Controllers\Api\V1\NivelD
 Route::apiResource('v1/pacientes', App\Http\Controllers\Api\V1\PacienteController::class);
 Route::apiResource('v1/servicios', App\Http\Controllers\Api\V1\ServicioController::class);
 Route::apiResource('v1/subcategorias', App\Http\Controllers\Api\V1\SubcategoriaController::class);
-Route::apiResource('v1/subcategoriasevoluciones', App\Http\Controllers\Api\V1\SubcategoriaEvolucionContoller::class);
 Route::apiResource('v1/tiposdesangre', App\Http\Controllers\Api\V1\TipoDeSangreController::class);
 Route::apiResource('v1/tratamientos', App\Http\Controllers\Api\V1\TratamientoController::class);
 
@@ -46,7 +45,7 @@ Route::get('v1/getestadocivil/{id}', [App\Http\Controllers\Api\V1\CustomResource
 Route::get('v1/geteducacion/{id}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getNivelDeInstruccion']);
 Route::get('v1/historiaclinicapaciente/{id}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getHistorialPaciente']);
 Route::get('v1/evolucionespaciente/{id}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getEvolucionesPaciente']);
-Route::get('v1/enfermedadespaciente/{id_paciente}/{id_evolucion}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getEnfermedadesPacienteEvolucion']);
 Route::get('v1/categoriassubcategorias/{codigo_categoria}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getSubcategoriasCategoriasCapitulos']);
-Route::get('v1/categoriascodigo/{codigo}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getCategorias']);
-Route::get('v1/subcategoriascodigo/{codigo}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getSubcategorias']);
+Route::get('v1/categoriascodigo/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getCategorias']);
+Route::get('v1/subcategoriascodigo/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getSubcategorias']);
+Route::get('v1/getpacientesbusqueda/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getPacientesxCedulaoNombre']);
