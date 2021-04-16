@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Evolucion;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class EvolucionController extends Controller
 {
@@ -16,6 +18,10 @@ class EvolucionController extends Controller
      */
     public function index()
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
         return new DataCollection(Evolucion::paginate(5));
     }
 
@@ -27,6 +33,10 @@ class EvolucionController extends Controller
      */
     public function store(Request $request)
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
         Evolucion::create($request->all())->save();
         return response()->json(
             $request->all(),
@@ -42,6 +52,10 @@ class EvolucionController extends Controller
      */
     public function show($id)
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
         return Evolucion::find($id);
     }
 
@@ -54,6 +68,10 @@ class EvolucionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
         $evolucion = Evolucion::findOrFail($id);
         $evolucion->historia_clinica_id = $request->get('historia_clinica_id');
         $evolucion->fecha = $request->get('fecha');
@@ -76,6 +94,10 @@ class EvolucionController extends Controller
      */
     public function destroy($id)
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
         Evolucion::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'

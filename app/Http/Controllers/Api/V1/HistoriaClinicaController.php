@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\HistoriaClinica;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HistoriaClinicaController extends Controller
 {
@@ -16,6 +18,10 @@ class HistoriaClinicaController extends Controller
      */
     public function index()
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
         return new DataCollection(HistoriaClinica::paginate(5));
     }
 
@@ -27,6 +33,11 @@ class HistoriaClinicaController extends Controller
      */
     public function store(Request $request)
     {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
         HistoriaClinica::create($request->all())->save();
         return response()->json(
             $request->all(),
@@ -42,6 +53,10 @@ class HistoriaClinicaController extends Controller
      */
     public function show($id)
     {
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
         return HistoriaClinica::find($id);
     }
 
@@ -54,6 +69,11 @@ class HistoriaClinicaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
         $historiaClinica = HistoriaClinica::findOrFail($id);
         $historiaClinica->paciente_id = $request->get('paciente_id');
         $historiaClinica->alergias = $request->get('alergias');
@@ -80,6 +100,11 @@ class HistoriaClinicaController extends Controller
      */
     public function destroy($id)
     {
+
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
         HistoriaClinica::findOrFail($id)->delete();
         return response()->json([
             'message' => 'Success'

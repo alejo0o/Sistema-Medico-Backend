@@ -9,7 +9,7 @@ class Cita extends Model
 {
     use HasFactory;
     protected $table = 'citas';
-    protected $fillable = ['paciente_id', 'medico_id', 'fecha', 'hora', 'motivo_cita'];
+    protected $fillable = ['paciente_id', 'medico_id', 'fecha', 'hora', 'motivo_cita', 'extra_info'];
     protected $primaryKey = 'cita_id';
     public $incrementing = true;
     protected $keyType = 'int';

@@ -60,6 +60,7 @@ class CitaController extends Controller
         $cita->fecha = $request->get('fecha');
         $cita->hora = $request->get('hora');
         $cita->motivo_cita = $request->get('motivo_cita');
+        $cita->extra_info = $request->get('extra_info');
         $cita->save();
 
         return  $cita;

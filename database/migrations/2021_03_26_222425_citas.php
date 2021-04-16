@@ -20,6 +20,7 @@ class Citas extends Migration
             $table->date('fecha');
             $table->time('hora');
             $table->text('motivo_cita')->nullable();
+            $table->string('extra_info', 100)->nullable();
             //$table->timestamps();
 
 
