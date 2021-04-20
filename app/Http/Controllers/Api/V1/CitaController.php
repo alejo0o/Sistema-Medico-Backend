@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cita;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
+use Illuminate\Support\Facades\DB;
 
 class CitaController extends Controller
 {
@@ -16,7 +17,18 @@ class CitaController extends Controller
      */
     public function index()
     {
-        return new DataCollection(Cita::paginate(5));
+        $citas = DB::table('citas')
+            ->select(
+                'citas.*',
+                'pacientes.nombres as paciente_nombres',
+                'pacientes.apellidos as paciente_apellidos',
+                'medicos.nombres as medico_nombres',
+                'medicos.apellidos as medico_apellidos'
+            )
+            ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
+            ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
+            ->paginate(5);
+        return json_encode($citas);
     }
 
     /**
@@ -42,7 +54,19 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        return Cita::find($id);
+        $cita = DB::table('citas')
+            ->select(
+                'citas.*',
+                'pacientes.nombres as paciente_nombres',
+                'pacientes.apellidos as paciente_apellidos',
+                'medicos.nombres as medico_nombres',
+                'medicos.apellidos as medico_apellidos'
+            )
+            ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
+            ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
+            ->where('citas.cita_id', '=', $id)
+            ->first();
+        return json_encode($cita);
     }
 
     /**
@@ -60,7 +84,6 @@ class CitaController extends Controller
         $cita->fecha = $request->get('fecha');
         $cita->hora = $request->get('hora');
         $cita->motivo_cita = $request->get('motivo_cita');
-        $cita->extra_info = $request->get('extra_info');
         $cita->save();
 
         return  $cita;

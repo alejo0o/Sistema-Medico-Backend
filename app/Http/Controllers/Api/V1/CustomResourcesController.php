@@ -116,10 +116,6 @@ class CustomResourcesController extends Controller
     //Retorna la busqueda de pacientes por cédula o por nombre
     public function getPacientesxCedulaoNombre($busqueda)
     {
-        //Politica para restringir autorización
-        if (Auth::user()->cannot('authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
 
         $pacientes = DB::table('pacientes')
             ->select('pacientes.*', 'estado_civil', 'etnia', 'genero', 'nivel_de_instruccion', 'tipo_sangre')
@@ -150,5 +146,51 @@ class CustomResourcesController extends Controller
 
 
         return $historia_clinica ? true : false;
+    }
+    //Retorna las citas segun la fecha
+    public function getCitasxFecha($fecha)
+    {
+        $citas = DB::table('citas')
+            ->select(
+                'citas.*',
+                'pacientes.nombres as paciente_nombres',
+                'pacientes.apellidos as paciente_apellidos',
+                'medicos.nombres as medico_nombres',
+                'medicos.apellidos as medico_apellidos'
+            )
+            ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
+            ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
+            ->whereDate('fecha', '=', $fecha)
+            ->get();
+
+        return json_encode($citas);
+    }
+    //Retorna la busqueda de medicos por cédula o por nombre
+    public function getMedicosxCedulaoNombre($busqueda)
+    {
+        $medicos = DB::table('medicos')
+            ->select('medicos.*')
+            ->where('medicos.cedula', 'ilike', "$busqueda%")
+            ->orWhereRaw("concat(trim(medicos.nombres),' ',trim(medicos.apellidos)) ilike ?", ["%$busqueda%"])
+            ->paginate(5);
+
+        return json_encode($medicos);
+    }
+    public function getCitasxMes($mes)
+    {
+        $citas = DB::table('citas')
+            ->select(
+                'citas.*',
+                'pacientes.nombres as paciente_nombres',
+                'pacientes.apellidos as paciente_apellidos',
+                'medicos.nombres as medico_nombres',
+                'medicos.apellidos as medico_apellidos'
+            )
+            ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
+            ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
+            ->whereMonth('fecha', '=', $mes)
+            ->get();
+
+        return json_encode($citas);
     }
 }

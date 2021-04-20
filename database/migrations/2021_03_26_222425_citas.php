@@ -17,10 +17,10 @@ class Citas extends Migration
             $table->increments('cita_id')->unique();
             $table->integer('paciente_id')->nullable();
             $table->integer('medico_id')->nullable();
-            $table->date('fecha');
+            $table->timestamp('fecha');
             $table->time('hora');
             $table->text('motivo_cita')->nullable();
-            $table->string('extra_info', 100)->nullable();
+
             //$table->timestamps();
 
 

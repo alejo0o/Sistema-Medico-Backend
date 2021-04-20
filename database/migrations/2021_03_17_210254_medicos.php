@@ -19,6 +19,9 @@ class Medicos extends Migration
             $table->char('cedula', 15);
             $table->char('nombres', 60);
             $table->char('apellidos', 60);
+            $table->char('telefono', 25);
+            $table->char('email', 100);
+            $table->json('especialidades');
             //$table->timestamps();
 
 

@@ -77,6 +77,7 @@ class PacienteController extends Controller
         $paciente->lugarnacimiento = $request->get('lugarnacimiento');
         $paciente->direccion = $request->get('direccion');
         $paciente->telefono = $request->get('telefono');
+        $paciente->email = $request->get('email');
         $paciente->ocupacion = $request->get('ocupacion');
         $paciente->numero_hijos = $request->get('numero_hijos');
         $paciente->contacto_emergencia_nombre = $request->get('contacto_emergencia_nombre');

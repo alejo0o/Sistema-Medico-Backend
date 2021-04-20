@@ -38,6 +38,7 @@ class PacienteFactory extends Factory
             'lugarnacimiento' => $this->faker->country,
             'direccion' => $this->faker->address,
             'telefono' => $this->faker->numberBetween(10000, 90000),
+            'email' => $this->faker->unique()->safeEmail,
             'ocupacion' => $this->faker->randomElement(array('Abogado/a', 'Doctor/a', 'Sin Ocupación', 'Ingeniero/a', 'Administrador/a de empresas', 'Vendedor/a', 'Costurero/a')),
             'numero_hijos' => $this->faker->numberBetween(1, 10),
             'contacto_emergencia_nombre' =>  $this->faker->randomElement(array($this->faker->firstName('male' | 'female'), null)),

@@ -13,7 +13,10 @@ class Medico extends Model
         'consultorio_id',
         'cedula',
         'nombres',
-        'apellidos'
+        'apellidos',
+        'telefono',
+        'email',
+        'especialidades'
     ];
     protected $primaryKey = 'medico_id';
     public $incrementing = true;

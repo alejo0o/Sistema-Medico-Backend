@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Evolucion;
+use App\Models\User;
 use Database\Seeders\TestingSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -22,7 +23,9 @@ class EvolucionControllerTest extends TestCase
     {
         //se corre el seeder para poblar la base de datos tablas dependientes (revisar el seeder para mas referencia)
         $this->seed(TestingSeeder::class);
-
+        //se crea un usuario para realizar la autenticación
+        $user = User::factory()->create();
+        $this->actingAs($user, 'api');
         //Es necesario crear en la base en memoria registros que tengan relacion con la tabla 
         $evolucion = Evolucion::factory()->makeOne()->toArray();
 

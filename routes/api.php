@@ -45,7 +45,10 @@ Route::get('v1/categoriascodigo/{busqueda}', [App\Http\Controllers\Api\V1\Custom
 Route::get('v1/subcategoriascodigo/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getSubcategorias'])->middleware('auth:api');
 Route::get('v1/getpacientesbusqueda/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getPacientesxCedulaoNombre'])->middleware('auth:api');
 Route::get('v1/existehistorial/{id}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getHistorial'])->middleware('auth:api');
-//JWT AUTH
+Route::get('v1/citasxfecha/{fecha}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getCitasxFecha'])->middleware('auth:api');
+Route::get('v1/citasxmes/{mes}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getCitasxMes'])->middleware('auth:api');
+Route::get('v1/medicosbusqueda/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getMedicosxCedulaoNombre'])->middleware('auth:api');
+//JWT AUTH getCitasxFecha
 
 
 Route::group([

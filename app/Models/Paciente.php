@@ -22,6 +22,7 @@ class Paciente extends Model
         'lugarnacimiento',
         'direccion',
         'telefono',
+        'email',
         'ocupacion',
         'numero_hijos',
         'contacto_emergencia_nombre',

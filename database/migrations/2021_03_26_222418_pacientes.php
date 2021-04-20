@@ -27,6 +27,7 @@ class Pacientes extends Migration
             $table->char('lugarnacimiento', 150);
             $table->char('direccion', 150);
             $table->char('telefono', 25);
+            $table->char('email', 100)->nullable();
             $table->char('ocupacion', 150);
             $table->integer('numero_hijos');
             $table->char('contacto_emergencia_nombre', 100)->nullable();

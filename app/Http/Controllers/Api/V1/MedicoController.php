@@ -59,6 +59,9 @@ class MedicoController extends Controller
         $medico->cedula = $request->get('cedula');
         $medico->nombres = $request->get('nombres');
         $medico->apellidos = $request->get('apellidos');
+        $medico->telefono = $request->get('telefono');
+        $medico->email = $request->get('email');
+        $medico->especialidades = $request->get('especialidades');
         $medico->save();
 
         return  $medico;
