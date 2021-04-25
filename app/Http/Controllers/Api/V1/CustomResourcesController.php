@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CitaMail;
+use App\Mail\CitasEmail;
 use App\Models\User;
+use App\Notifications\CitaAlerta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class CustomResourcesController extends Controller
@@ -155,8 +160,12 @@ class CustomResourcesController extends Controller
                 'citas.*',
                 'pacientes.nombres as paciente_nombres',
                 'pacientes.apellidos as paciente_apellidos',
+                'pacientes.email as paciente_correo',
+                'pacientes.telefono as paciente_numero',
                 'medicos.nombres as medico_nombres',
-                'medicos.apellidos as medico_apellidos'
+                'medicos.apellidos as medico_apellidos',
+                'medicos.email as medico_correo',
+                'medicos.telefono as medico_numero'
             )
             ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
             ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
@@ -192,5 +201,45 @@ class CustomResourcesController extends Controller
             ->get();
 
         return json_encode($citas);
+    }
+    public function sendiCitaConfirmacion(Request $request)
+    {
+        $variable = request(['correo', 'nombre_completo', 'hora', 'fecha', 'medico']);
+        try {
+            Mail::to($variable['correo'])->send(new CitasEmail($variable));
+            return response()->json(
+                ['message' => 'correo enviado'],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                ['error' => 'Error al enviar el correo.'],
+                500
+            );
+        }
+    }
+    public function sendiCitaConfirmacionSMS(Request $request)
+    {
+        $variable = request(['telefono', 'nombre_completo', 'hora', 'fecha', 'medico']);
+        try {
+            Notification::route('nexmo', $variable['telefono'])->notify(new CitaAlerta($variable));
+            return response()->json(
+                ['message' => 'SMS enviado'],
+                200
+            );
+        } catch (\Throwable $th) {
+            return response()->json(
+                ['error' => 'Error al enviar el SMS.'],
+                500
+            );
+        }
+    }
+    public function searchEspecialidad($busqueda)
+    {
+        $especialidaes = DB::table('especialidades')
+            ->select('*')
+            ->where('especialidad', 'ilike', "$busqueda%")
+            ->paginate(8);
+        return json_encode($especialidaes);
     }
 }

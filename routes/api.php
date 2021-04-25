@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('v1/capitulos', App\Http\Controllers\Api\V1\CapituloController::class)->middleware('auth:api');
 Route::apiResource('v1/categorias', App\Http\Controllers\Api\V1\CategoriaController::class)->middleware('auth:api');
 Route::apiResource('v1/citas', App\Http\Controllers\Api\V1\CitaController::class)->middleware('auth:api');
-Route::apiResource('v1/consultorios', App\Http\Controllers\Api\V1\ConsultorioController::class)->middleware('auth:api');
+Route::apiResource('v1/consultorios', App\Http\Controllers\Api\V1\ConsultorioController::class);
 Route::apiResource('v1/especialidades', App\Http\Controllers\Api\V1\EspecialidadController::class)->middleware('auth:api');
 Route::apiResource('v1/estadosciviles', App\Http\Controllers\Api\V1\EstadoCivilController::class)->middleware('auth:api');
 Route::apiResource('v1/etnias', App\Http\Controllers\Api\V1\EtniaController::class)->middleware('auth:api');
@@ -32,7 +32,7 @@ Route::apiResource('v1/inventario', App\Http\Controllers\Api\V1\InventarioContro
 Route::apiResource('v1/medicos', App\Http\Controllers\Api\V1\MedicoController::class)->middleware('auth:api');
 Route::apiResource('v1/nivelesdeinstruccion', App\Http\Controllers\Api\V1\NivelDeInstruccionController::class)->middleware('auth:api');
 Route::apiResource('v1/pacientes', App\Http\Controllers\Api\V1\PacienteController::class)->middleware('auth:api');
-Route::apiResource('v1/servicios', App\Http\Controllers\Api\V1\ServicioController::class)->middleware('auth:api');
+Route::apiResource('v1/servicios', App\Http\Controllers\Api\V1\ServicioController::class);
 Route::apiResource('v1/subcategorias', App\Http\Controllers\Api\V1\SubcategoriaController::class)->middleware('auth:api');
 Route::apiResource('v1/tiposdesangre', App\Http\Controllers\Api\V1\TipoDeSangreController::class)->middleware('auth:api');
 Route::apiResource('v1/tratamientos', App\Http\Controllers\Api\V1\TratamientoController::class)->middleware('auth:api');
@@ -48,9 +48,10 @@ Route::get('v1/existehistorial/{id}', [App\Http\Controllers\Api\V1\CustomResourc
 Route::get('v1/citasxfecha/{fecha}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getCitasxFecha'])->middleware('auth:api');
 Route::get('v1/citasxmes/{mes}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getCitasxMes'])->middleware('auth:api');
 Route::get('v1/medicosbusqueda/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getMedicosxCedulaoNombre'])->middleware('auth:api');
-//JWT AUTH getCitasxFecha
-
-
+Route::post('v1/enviarcitaconfirmacion', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'sendiCitaConfirmacion'])->middleware('auth:api');
+Route::post('v1/enviarcitaconfirmacionsms', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'sendiCitaConfirmacionSMS'])->middleware('auth:api');
+Route::get('v1/especialidadbuscar/{busqueda}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'searchEspecialidad'])->middleware('auth:api');
+//JWT AUTH 
 Route::group([
 
     'middleware' => 'api',

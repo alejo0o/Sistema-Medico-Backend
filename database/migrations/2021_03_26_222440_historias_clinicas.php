@@ -30,7 +30,7 @@ class HistoriasClinicas extends Migration
             //$table->timestamps();
 
 
-            $table->foreign('paciente_id')->references('paciente_id')->on('pacientes')->onDelete('cascade');
+            $table->foreign('paciente_id')->references('paciente_id')->on('pacientes')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\CitaMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+/*
+
+Route::get('/email', function () {
+    Mail::to('manuelinviv@gmail.com')->send(new CitaMail());
+
+    return new CitaMail();
+});
+
+*/

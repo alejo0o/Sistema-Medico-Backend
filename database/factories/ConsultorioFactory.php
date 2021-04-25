@@ -23,9 +23,9 @@ class ConsultorioFactory extends Factory
     {
         return [
             'nombre' =>  $this->faker->company,
-            'descripcion' => $this->faker->text(50),
-            'vision' => $this->faker->text(50),
-            'mision' => $this->faker->text(50),
+            'descripcion' => $this->faker->text(150),
+            'vision' => $this->faker->text(150),
+            'mision' => $this->faker->text(150),
             'ruc' => $this->faker->unique()->numberBetween(1000, 9000),
             'direccion' => $this->faker->address,
             'telefono' => $this->faker->phoneNumber,

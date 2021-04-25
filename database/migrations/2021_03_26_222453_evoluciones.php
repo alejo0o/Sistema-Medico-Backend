@@ -26,7 +26,7 @@ class Evoluciones extends Migration
             //$table->timestamps();
 
 
-            $table->foreign('historia_clinica_id')->references('historia_clinica_id')->on('historias_clinicas')->onDelete('cascade');
+            $table->foreign('historia_clinica_id')->references('historia_clinica_id')->on('historias_clinicas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

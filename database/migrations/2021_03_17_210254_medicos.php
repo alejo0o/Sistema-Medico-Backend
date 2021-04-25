@@ -25,7 +25,7 @@ class Medicos extends Migration
             //$table->timestamps();
 
 
-            $table->foreign('consultorio_id')->references('consultorio_id')->on('consultorios');
+            $table->foreign('consultorio_id')->references('consultorio_id')->on('consultorios')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
