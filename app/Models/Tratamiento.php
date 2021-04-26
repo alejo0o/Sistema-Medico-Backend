@@ -10,7 +10,7 @@ class Tratamiento extends Model
     use HasFactory;
     protected $table = 'tratamientos';
     protected $fillable = ['nombre', 'precio'];
-    protected $primaryKey = 'tipo_de_sangre_id';
+    protected $primaryKey = 'tratamiento_id';
     public $incrementing = true;
     protected $keyType = 'int';
     public $timestamps = false;

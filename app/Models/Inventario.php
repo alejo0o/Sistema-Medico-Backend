@@ -14,7 +14,7 @@ class Inventario extends Model
         'costo_unitario',
         'cantidad',
     ];
-    protected $primaryKey = 'material_id';
+    protected $primaryKey = 'inventario_id';
     public $incrementing = true;
     protected $keyType = 'int';
     public $timestamps = false;
