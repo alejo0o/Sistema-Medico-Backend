@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(5)->create();
+        \App\Models\User::factory(10)->create();
 
         /*-------Descomentar para generar las tablas independientes de etnias, estado civil, nivel de instruccion y tipo de sangre-----*/
         //\App\Models\Etnia::factory(6)->create();

@@ -15,8 +15,8 @@ class Citas extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->increments('cita_id')->unique();
-            $table->integer('paciente_id')->nullable();
-            $table->integer('medico_id')->nullable();
+            $table->integer('paciente_id');
+            $table->integer('medico_id');
             $table->timestamp('fecha');
             $table->time('hora');
             $table->text('motivo_cita')->nullable();

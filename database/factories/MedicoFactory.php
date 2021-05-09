@@ -23,7 +23,7 @@ class MedicoFactory extends Factory
     {
         return [
             'consultorio_id' => 1,
-            'cedula' => $this->faker->unique()->numberBetween(1000, 9000),
+            'cedula' => $this->faker->unique()->numberBetween(1000, 20000),
             'nombres' =>  $this->faker->firstName('male' | 'female'),
             'apellidos' => $this->faker->lastName,
             'telefono' => $this->faker->numberBetween(10000, 90000),

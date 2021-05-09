@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Mail\CitaMail;
 use App\Mail\CitasEmail;
+use App\Mail\CredencialesEmail;
+use App\Models\Cita;
 use App\Models\User;
 use App\Notifications\CitaAlerta;
 use Illuminate\Http\Request;
@@ -18,8 +20,6 @@ class CustomResourcesController extends Controller
 {
     public function getPacientes() //RETORNA UNA CANTIDAD DE PACIENTES PARA EL STATIC GENERATION DE NEXT
     {
-
-
         //Politica para restringir autorización
         if (Auth::user()->cannot('authorize', User::class)) {
             abort(403, 'Usuario no autorizado');
@@ -27,6 +27,11 @@ class CustomResourcesController extends Controller
 
 
         return DB::table('pacientes')->paginate(100);
+    }
+    //Retorna todos los  meidicos
+    public function getAllMedicos()
+    {
+        return DB::table('medicos')->get()->all();
     }
     //Retorna las historias clinicas por paciente
     public function getHistorialPaciente($id_paciente)
@@ -153,7 +158,7 @@ class CustomResourcesController extends Controller
         return $historia_clinica ? true : false;
     }
     //Retorna las citas segun la fecha
-    public function getCitasxFecha($fecha)
+    public function getCitasxFecha($fecha, $medico_cedula)
     {
         $citas = DB::table('citas')
             ->select(
@@ -170,6 +175,8 @@ class CustomResourcesController extends Controller
             ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
             ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
             ->whereDate('fecha', '=', $fecha)
+            ->where('medicos.cedula', '=', $medico_cedula)
+            ->orderBy('citas.hora', 'asc')
             ->get();
 
         return json_encode($citas);
@@ -185,19 +192,25 @@ class CustomResourcesController extends Controller
 
         return json_encode($medicos);
     }
-    public function getCitasxMes($mes)
+    public function getCitasxMes($mes, $medico_cedula)
     {
         $citas = DB::table('citas')
             ->select(
                 'citas.*',
                 'pacientes.nombres as paciente_nombres',
                 'pacientes.apellidos as paciente_apellidos',
+                'pacientes.email as paciente_correo',
+                'pacientes.telefono as paciente_numero',
                 'medicos.nombres as medico_nombres',
-                'medicos.apellidos as medico_apellidos'
+                'medicos.apellidos as medico_apellidos',
+                'medicos.email as medico_correo',
+                'medicos.telefono as medico_numero'
             )
             ->join('pacientes', 'citas.paciente_id', '=', 'pacientes.paciente_id')
             ->join('medicos', 'citas.medico_id', '=', 'medicos.medico_id')
             ->whereMonth('fecha', '=', $mes)
+            ->where('medicos.cedula', '=', $medico_cedula)
+            ->orderBy('citas.hora', 'asc')
             ->get();
 
         return json_encode($citas);
@@ -241,5 +254,140 @@ class CustomResourcesController extends Controller
             ->where('especialidad', 'ilike', "$busqueda%")
             ->paginate(8);
         return json_encode($especialidaes);
+    }
+    //Retorna la busqueda de tratamientos por nombre
+    public function getTratamientosxNombre($busqueda)
+    {
+        $tratamientos = DB::table('tratamientos')
+            ->select('tratamientos.*')
+            ->where('tratamientos.nombre', 'ilike', "%$busqueda%")
+            ->paginate(5);
+
+        return json_encode($tratamientos);
+    }
+    //Retorna la busqueda de materiales por nombre
+    public function getMaterialesxNombre($busqueda)
+    {
+        $inventario = DB::table('inventario')
+            ->select('inventario.*')
+            ->where('inventario.nombre', 'ilike', "%$busqueda%")
+            ->paginate(5);
+
+        return json_encode($inventario);
+    }
+    //Retorna la información del paciente y su evolución en base al id de su evolución
+    public function getPaicientexEvolucion($id)
+    {
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
+        $paciente_evolucion = DB::table('evoluciones')
+            ->select(
+                'pacientes.nombres',
+                'pacientes.apellidos',
+                'pacientes.fechanacimiento',
+                'generos.genero',
+                'generos.genero_id',
+                'pacientes.cedula',
+                'evoluciones.medicacion',
+                'evoluciones.indicaciones',
+                'evoluciones.diagnostico',
+                'evoluciones.fecha'
+            )
+            ->join('historias_clinicas', 'evoluciones.historia_clinica_id', '=', 'historias_clinicas.historia_clinica_id')
+            ->join('pacientes', 'historias_clinicas.paciente_id', '=', 'pacientes.paciente_id')
+            ->join('generos', 'pacientes.genero_id', '=', 'generos.genero_id')
+            ->where('evoluciones.evolucion_id', '=', $id)
+            ->first();
+        return json_encode($paciente_evolucion);
+    }
+    //Obtiene los datos del médico por la cédula
+    public function getMedicoxCedula($cedula)
+    {
+        $medico = DB::table('medicos')
+            ->select(
+                '*'
+            )
+            ->where('cedula', '=', $cedula)
+            ->first();
+        return json_encode($medico);
+    }
+    //Revisa si existe una cita en un hora especificada antes de crear otra
+    public function crearCitaComprobacion(Request $request)
+    {
+        $citas = DB::table('citas')
+            ->select(
+                '*'
+            )
+            ->where('medico_id', '=', $request->get('medico_id'))
+            ->whereDate('fecha', '=', $request->get('fecha'))
+            ->whereTime('hora', '=', $request->get('hora'))
+            ->first();
+
+        if ($citas) {
+            return response()->json(
+                ['citaexiste' => 'Ya existe una cita programada a esa hora.'],
+                500
+            );
+        }
+        Cita::create($request->all())->save();
+        return response()->json(
+            $request->all(),
+            201
+        );
+    }
+    //Revisa si existe una cita en un hora especificada antes de editarla
+    public function editarCitaComprobacion(Request $request, $id)
+    {
+        $citas = DB::table('citas')
+            ->select(
+                '*'
+            )
+            ->where('cita_id', '!=', $id)
+            ->where('medico_id', '=', $request->get('medico_id'))
+            ->whereDate('fecha', '=', $request->get('fecha'))
+            ->whereTime('hora', '=', $request->get('hora'))
+            ->first();
+
+        if ($citas) {
+            return response()->json(
+                ['citaexiste' => 'Ya existe una cita programada a esa hora.'],
+                500
+            );
+        }
+        $cita = Cita::findOrFail($id);
+        $cita->paciente_id = $request->get('paciente_id');
+        $cita->medico_id = $request->get('medico_id');
+        $cita->fecha = $request->get('fecha');
+        $cita->hora = $request->get('hora');
+        $cita->motivo_cita = $request->get('motivo_cita');
+        $cita->save();
+
+        return  $cita;
+    }
+    //Envio de credenciales al crear un usuario
+    public function SendCredencialesEmail()
+    {
+        if (Auth::user()->cannot('user_authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
+        $variable = request(['email', 'name', 'username', 'user_type', 'cedula', 'password']);
+
+        try {
+            Mail::to($variable['email'])->send(new CredencialesEmail($variable));
+            return response()->json(
+                ['message' => 'correo enviado'],
+                200
+            );
+        } catch (\Throwable $th) {
+
+            return response()->json(
+                ['error' => 'Error al enviar el correo.'],
+                500
+            );
+        }
     }
 }

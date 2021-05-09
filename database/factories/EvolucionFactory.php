@@ -35,7 +35,8 @@ class EvolucionFactory extends Factory
                 '[{"codigo":"A020","descripcion":"Enteritis debida a Salmonella"},{"codigo":"A03","descripcion":"Shigelosis"},{"codigo":"A031","descripcion":"Shigelosis debida a Shigella flexneri"}]',
                 '[{"codigo":"A00","descripcion":"Cólera"},{"codigo":"A009","descripcion":"Cólera, no especificado"},{"codigo":"A010","descripcion":"Fiebre tifoidea"}]'
             )),
-            'tratamiento' => $this->faker->text(150),
+            'medicacion' => $this->faker->text(150),
+            'indicaciones' => $this->faker->text(150),
             'proximo_control' => $this->faker->randomElement(array($this->faker->date('Y/m/d', 'now'), null)),
         ];
     }

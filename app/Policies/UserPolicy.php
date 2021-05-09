@@ -21,4 +21,10 @@ class UserPolicy
             return true;
         else return false;
     }
+    public function user_authorize(User $user)
+    {
+        if ($user->user_type === 'admin')
+            return true;
+        else return false;
+    }
 }

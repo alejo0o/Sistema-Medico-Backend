@@ -16,7 +16,8 @@ class Evolucion extends Model
         'fecha_ultima_menstruacion',
         'procedimiento',
         'diagnostico',
-        'tratamiento',
+        'medicacion',
+        'indicaciones',
         'proximo_control'
     ];
     protected $primaryKey = 'evolucion_id';

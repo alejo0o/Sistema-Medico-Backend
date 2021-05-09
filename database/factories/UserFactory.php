@@ -28,6 +28,7 @@ class UserFactory extends Factory
             'username' => $this->faker->unique()->word,
             'user_type' => $this->faker->randomElement(array('admin', 'medico', 'user')), //array('admin') ----array para testing      
             //array('admin', 'medico', 'user') ----array para seeding 
+            'cedula' => $this->faker->unique()->numberBetween(1000, 20000),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

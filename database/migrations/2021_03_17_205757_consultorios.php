@@ -20,7 +20,7 @@ class Consultorios extends Migration
             $table->text('vision')->nullable();
             $table->text('mision')->nullable();
             $table->char('ruc', 15);
-            $table->char('direccion', 50);
+            $table->char('direccion', 100);
             $table->char('telefono', 15);
             $table->char('logo', 250);
             $table->char('correo', 100)->nullable();

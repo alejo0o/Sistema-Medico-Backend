@@ -29,7 +29,7 @@ class ConsultorioFactory extends Factory
             'ruc' => $this->faker->unique()->numberBetween(1000, 9000),
             'direccion' => $this->faker->address,
             'telefono' => $this->faker->phoneNumber,
-            'logo' => 'https://w7.pngwing.com/pngs/957/974/png-transparent-hospital-logo-clinic-health-care-physician-business.png',
+            'logo' => 'https://i.ibb.co/C2v0LPB/company.png',
             'correo' => 'avivanco368@puce.edu.ec',
             'red_social1' => 'https://www.facebook.com',
             'red_social2' => 'https://www.instagram.com'

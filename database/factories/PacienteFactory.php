@@ -33,7 +33,7 @@ class PacienteFactory extends Factory
             'genero_id' => $this->faker->randomElement(array(1, 2)),
             'nombres' => $this->faker->firstName('male' | 'female'),
             'apellidos' => $this->faker->lastName,
-            'cedula' => $this->faker->unique()->numberBetween(1000, 9000),
+            'cedula' => $this->faker->unique()->numberBetween(1000, 20000),
             'fechanacimiento' => $this->faker->date('Y/m/d', 'now'),
             'lugarnacimiento' => $this->faker->country,
             'direccion' => $this->faker->address,

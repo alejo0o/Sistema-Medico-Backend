@@ -22,7 +22,7 @@ class Pacientes extends Migration
             $table->integer('genero_id')->nullable();
             $table->char('nombres', 60);
             $table->char('apellidos', 60);
-            $table->char('cedula', 15)->unique();
+            $table->string('cedula', 15)->unique();
             $table->date('fechanacimiento');
             $table->char('lugarnacimiento', 150);
             $table->char('direccion', 150);

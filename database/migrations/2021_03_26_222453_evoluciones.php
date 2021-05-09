@@ -21,7 +21,8 @@ class Evoluciones extends Migration
             $table->date('fecha_ultima_menstruacion')->nullable();
             $table->text('procedimiento');
             $table->json('diagnostico');
-            $table->text('tratamiento');
+            $table->text('medicacion');
+            $table->text('indicaciones');
             $table->date('proximo_control')->nullable();
             //$table->timestamps();
 

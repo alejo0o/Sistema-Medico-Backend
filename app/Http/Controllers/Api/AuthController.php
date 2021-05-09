@@ -48,6 +48,7 @@ class AuthController extends Controller
         $usuario->email = auth()->user()->email;
         $usuario->user_type = auth()->user()->user_type;
         $usuario->name = auth()->user()->name;
+        $usuario->cedula = auth()->user()->cedula;
 
 
         return response()->json($usuario);
@@ -94,8 +95,10 @@ class AuthController extends Controller
     {
         $user = new  User();
         $user->name = $request->name;
-        $user->surname = $request->surname;
         $user->email = $request->email;
+        $user->username = $request->username;
+        $user->user_type = $request->user_type;
+        $user->cedula = $request->cedula;
         $user->password = bcrypt($request->password);
         $user->save();
 

@@ -16,7 +16,7 @@ class Medicos extends Migration
         Schema::create('medicos', function (Blueprint $table) {
             $table->increments('medico_id')->unique();
             $table->integer('consultorio_id')->nullable();
-            $table->char('cedula', 15);
+            $table->string('cedula', 15);
             $table->char('nombres', 60);
             $table->char('apellidos', 60);
             $table->char('telefono', 25);
