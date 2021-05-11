@@ -70,6 +70,8 @@ Route::get('v1/emailexiste/{busqueda}', [App\Http\Controllers\Api\V1\UsuarioCont
 Route::get('v1/cedulaexisteedit/{busqueda}/{id}', [App\Http\Controllers\Api\V1\UsuarioController::class, 'cedulaExisteEdit'])->middleware('auth:api');
 Route::get('v1/usernameexisteedit/{busqueda}/{id}', [App\Http\Controllers\Api\V1\UsuarioController::class, 'usernameExisteEdit'])->middleware('auth:api');
 Route::get('v1/emailexisteedit/{busqueda}/{id}', [App\Http\Controllers\Api\V1\UsuarioController::class, 'emailExisteEdit'])->middleware('auth:api');
+Route::put('v1/editarperfil', [App\Http\Controllers\Api\V1\UsuarioController::class, 'editarPerfil'])->middleware('auth:api');
+Route::post('v1/cambiarcontrasena', [App\Http\Controllers\Api\V1\UsuarioController::class, 'changePassword'])->middleware('auth:api');
 //
 Route::post('v1/enviarcredencialesemail', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'SendCredencialesEmail'])->middleware('auth:api');
 

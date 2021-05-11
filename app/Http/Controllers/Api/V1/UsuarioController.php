@@ -98,9 +98,7 @@ class UsuarioController extends Controller
     //Verfica la existencia de cedula
     public function cedulaExiste($cedula)
     {
-        if (Auth::user()->cannot('user_authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
+
 
         $usuario = DB::table('users')
             ->select('*')
@@ -115,9 +113,7 @@ class UsuarioController extends Controller
     //Verfica la existencia de cedula
     public function usernameExiste($username)
     {
-        if (Auth::user()->cannot('user_authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
+
 
         $usuario = DB::table('users')
             ->select('*')
@@ -132,9 +128,7 @@ class UsuarioController extends Controller
     //Verfica la existencia de cedula
     public function emailExiste($email)
     {
-        if (Auth::user()->cannot('user_authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
+
 
         $usuario = DB::table('users')
             ->select('*')
@@ -149,9 +143,7 @@ class UsuarioController extends Controller
     //Verfica la existencia de cedula
     public function cedulaExisteEdit($cedula, $id)
     {
-        if (Auth::user()->cannot('user_authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
+
 
         $usuario = DB::table('users')
             ->select('*')
@@ -167,9 +159,7 @@ class UsuarioController extends Controller
     //Verfica la existencia de cedula
     public function usernameExisteEdit($username, $id)
     {
-        if (Auth::user()->cannot('user_authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
+
 
         $usuario = DB::table('users')
             ->select('*')
@@ -185,9 +175,7 @@ class UsuarioController extends Controller
     //Verfica la existencia de cedula
     public function emailExisteEdit($email, $id)
     {
-        if (Auth::user()->cannot('user_authorize', User::class)) {
-            abort(403, 'Usuario no autorizado');
-        }
+
 
         $usuario = DB::table('users')
             ->select('*')
@@ -199,5 +187,38 @@ class UsuarioController extends Controller
             return true;
 
         return false;
+    }
+    //Edicion del perfil de un usuario
+    public function editarPerfil(Request $request)
+    {
+        $usuario = User::findOrFail(auth()->user()->id);
+        $usuario->name = $request->name;
+        $usuario->username = $request->username;
+        $usuario->email = $request->email;
+        $usuario->cedula = $request->cedula;
+        $usuario->user_type = $request->user_type;
+        $usuario->save();
+
+        return response()->json(
+            $usuario,
+            200
+        );
+    }
+    public function changePassword(Request $request)
+    {
+        $credentials = request(['username', 'password']);
+
+
+        if (!auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $usuario = User::findOrFail(auth()->user()->id);
+        $usuario->password = bcrypt($request->new_password);
+        $usuario->save();
+        return response()->json(
+            ['message' => 'Cambio de contraseña exitoso'],
+            200
+        );
     }
 }

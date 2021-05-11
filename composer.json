@@ -15,6 +15,9 @@
         "laravel/framework": "^8.12",
         "laravel/nexmo-notification-channel": "^2.5",
         "laravel/tinker": "^2.5",
+        "league/flysystem-aws-s3-v3": "~1.0",
+        "league/flysystem-cached-adapter": "~1.0",
+        "league/flysystem-sftp": "~1.0",
         "nexmo/laravel": "^2.4",
         "tymon/jwt-auth": "^1.0"
     },

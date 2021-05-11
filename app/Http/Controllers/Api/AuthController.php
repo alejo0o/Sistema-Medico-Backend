@@ -44,12 +44,13 @@ class AuthController extends Controller
     public function me()
     {
         $usuario = new User();
+        $usuario->id = auth()->user()->id;
         $usuario->username = auth()->user()->username;
         $usuario->email = auth()->user()->email;
         $usuario->user_type = auth()->user()->user_type;
         $usuario->name = auth()->user()->name;
         $usuario->cedula = auth()->user()->cedula;
-
+        $usuario->token = auth()->tokenById(auth()->user()->id);
 
         return response()->json($usuario);
     }
@@ -73,7 +74,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth()->refresh(true, true));
     }
 
     /**
