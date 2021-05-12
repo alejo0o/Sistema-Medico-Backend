@@ -17,6 +17,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
+
         return new DataCollection(Servicio::paginate(5));
     }
 

@@ -42,6 +42,7 @@ class ConsultorioController extends Controller
      */
     public function show($id)
     {
+
         return Consultorio::find($id);
     }
 

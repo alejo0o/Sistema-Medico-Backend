@@ -160,6 +160,7 @@ class CustomResourcesController extends Controller
     //Retorna las citas segun la fecha
     public function getCitasxFecha($fecha, $medico_cedula)
     {
+
         $citas = DB::table('citas')
             ->select(
                 'citas.*',
@@ -194,6 +195,7 @@ class CustomResourcesController extends Controller
     }
     public function getCitasxMes($mes, $medico_cedula)
     {
+
         $citas = DB::table('citas')
             ->select(
                 'citas.*',

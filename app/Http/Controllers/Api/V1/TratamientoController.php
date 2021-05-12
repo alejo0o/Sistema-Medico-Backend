@@ -43,6 +43,7 @@ class TratamientoController extends Controller
      */
     public function show($id)
     {
+
         return Tratamiento::find($id);
     }
 
