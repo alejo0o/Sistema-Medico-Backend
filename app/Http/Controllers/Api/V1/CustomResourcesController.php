@@ -86,6 +86,7 @@ class CustomResourcesController extends Controller
                 'evoluciones.*'
             )
             ->where('pacientes.paciente_id', '=', $id_paciente)
+            ->orderBy('evoluciones.fecha', 'asc')
             ->paginate(5);
         return json_encode($evoluciones);
     }
@@ -189,6 +190,7 @@ class CustomResourcesController extends Controller
             ->select('medicos.*')
             ->where('medicos.cedula', 'ilike', "$busqueda%")
             ->orWhereRaw("concat(trim(medicos.nombres),' ',trim(medicos.apellidos)) ilike ?", ["%$busqueda%"])
+            ->orderBy('medicos.nombres', 'asc')
             ->paginate(5);
 
         return json_encode($medicos);
@@ -263,6 +265,7 @@ class CustomResourcesController extends Controller
         $tratamientos = DB::table('tratamientos')
             ->select('tratamientos.*')
             ->where('tratamientos.nombre', 'ilike', "%$busqueda%")
+            ->orderBy('tratamientos.nombre', 'asc')
             ->paginate(5);
 
         return json_encode($tratamientos);
@@ -273,6 +276,7 @@ class CustomResourcesController extends Controller
         $inventario = DB::table('inventario')
             ->select('inventario.*')
             ->where('inventario.nombre', 'ilike', "%$busqueda%")
+            ->orderBy('inventario.nombre', 'asc')
             ->paginate(5);
 
         return json_encode($inventario);
@@ -391,5 +395,27 @@ class CustomResourcesController extends Controller
                 500
             );
         }
+    }
+    public function BuscarEvolucionesxFecha($id_paciente, $fecha)
+    {
+
+        //Politica para restringir autorización
+        if (Auth::user()->cannot('authorize', User::class)) {
+            abort(403, 'Usuario no autorizado');
+        }
+
+        $evoluciones = DB::table('pacientes')
+            ->join('historias_clinicas', 'historias_clinicas.paciente_id', '=', 'pacientes.paciente_id')
+            ->join('evoluciones', 'evoluciones.historia_clinica_id', '=', 'historias_clinicas.historia_clinica_id')
+            ->select(
+                'pacientes.paciente_id',
+                'historias_clinicas.historia_clinica_id',
+                'evoluciones.*'
+            )
+            ->where('pacientes.paciente_id', '=', $id_paciente)
+            ->whereDate('evoluciones.fecha', '=', $fecha)
+            ->orderBy('evoluciones.fecha', 'asc')
+            ->paginate(5);
+        return json_encode($evoluciones);
     }
 }

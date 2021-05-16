@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Medico;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
+use Illuminate\Support\Facades\DB;
 
 class MedicoController extends Controller
 {
@@ -16,7 +17,11 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        return new DataCollection(Medico::paginate(5));
+        $medicos = DB::table("medicos")
+            ->select('*')
+            ->orderBy('apellidos', 'asc')
+            ->paginate(5);
+        return json_encode($medicos);
     }
 
     /**

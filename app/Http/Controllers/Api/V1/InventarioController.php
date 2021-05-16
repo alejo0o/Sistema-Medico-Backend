@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Inventario;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
+use Illuminate\Support\Facades\DB;
 
 class InventarioController extends Controller
 {
@@ -16,7 +17,11 @@ class InventarioController extends Controller
      */
     public function index()
     {
-        return new DataCollection(Inventario::paginate(5));
+        $inventario = DB::table('inventario')
+            ->select('*')
+            ->orderBy('nombre', 'asc')
+            ->paginate(5);
+        return json_encode($inventario);
     }
 
     /**

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tratamiento;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\DataCollection;
-
+use Illuminate\Support\Facades\DB;
 
 class TratamientoController extends Controller
 {
@@ -17,7 +17,11 @@ class TratamientoController extends Controller
      */
     public function index()
     {
-        return new DataCollection(Tratamiento::paginate(5));
+        $tratamientos = DB::table('tratamientos')
+            ->select('*')
+            ->orderBy('nombre', 'asc')
+            ->paginate(5);
+        return json_encode($tratamientos);
     }
 
     /**

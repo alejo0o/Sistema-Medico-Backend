@@ -58,6 +58,7 @@ Route::get('v1/medicoxcedula/{id}', [App\Http\Controllers\Api\V1\CustomResources
 Route::get('v1/medicosall', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'getAllMedicos'])->middleware('auth:api');
 Route::post('v1/crearcita', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'crearCitaComprobacion'])->middleware('auth:api');
 Route::put('v1/editarcita/{id}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'editarCitaComprobacion'])->middleware('auth:api');
+Route::get('v1/evolucionesxfecha/{id}/{fecha}', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'BuscarEvolucionesxFecha'])->middleware('auth:api');
 //Manejo de usuarios
 Route::post('v1/crearusuario', [App\Http\Controllers\Api\V1\UsuarioController::class, 'crearUsuarios'])->middleware('auth:api');
 Route::get('v1/usuariosbuscar/{busqueda}', [App\Http\Controllers\Api\V1\UsuarioController::class, 'getUsuariosxCedulaoNombre'])->middleware('auth:api');
@@ -75,7 +76,7 @@ Route::post('v1/cambiarcontrasena', [App\Http\Controllers\Api\V1\UsuarioControll
 //
 Route::post('v1/enviarcredencialesemail', [App\Http\Controllers\Api\V1\CustomResourcesController::class, 'SendCredencialesEmail'])->middleware('auth:api');
 
-//JWT AUTH        
+//JWT AUTH 
 Route::group([
 
     'middleware' => 'api',

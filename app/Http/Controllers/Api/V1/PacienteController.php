@@ -24,6 +24,7 @@ class PacienteController extends Controller
             ->join('tipos_de_sangre', 'pacientes.tipo_de_sangre_id', '=', 'tipos_de_sangre.tipo_de_sangre_id')
             ->join('etnias', 'pacientes.etnia_id', '=', 'etnias.etnia_id')
             ->join('generos', 'pacientes.genero_id', '=', 'generos.genero_id')
+            ->orderBy('apellidos', 'asc')
             ->paginate(5);
         return json_encode($pacientes);
         //return new DataCollection(Paciente::paginate(5));
